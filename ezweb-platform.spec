@@ -15,7 +15,8 @@ License:	GPLv2+
 Group:		System/Servers
 Summary:	EzWeb Platform
 BuildRoot:      %{_tmppath}/%{name}-buildroot
-BuildRequires:	python-devel
+BuildRequires:	python-devel, python-sqlite, python-django >= 1.0, python-libxml2dom
+BuildRequires:	python-psycopg, python-imaging
 Requires:	python-django >= 1.0, apache, apache-mod_python, python-sqlite
 Requires:	python-psycopg python-imaging python-libxml2dom
 BuildArch:	noarch
