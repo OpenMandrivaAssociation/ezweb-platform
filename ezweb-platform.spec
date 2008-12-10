@@ -4,7 +4,7 @@
 %define ezwebdir %_datadir/%name
 %define databasedir /var/lib/%name
 
-%define svnrev 1525
+%define svnrev 1580
 
 Name:		ezweb-platform
 Version:	0.1
