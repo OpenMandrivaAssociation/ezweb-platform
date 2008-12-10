@@ -2,7 +2,7 @@
 %define python_compile     python -c "import compileall; compileall.compile_dir('.')"
 
 %define ezwebdir %_datadir/%name
-%define databasedir /var/lib/%name
+%define databasedir %{_localstatedir}/%{_lib}/%name
 
 %define svnrev 1580
 
@@ -25,7 +25,8 @@ architecture
 
 %prep
 %setup -q -n ezweb-platform-svn%{svnrev}
-sed -ie "s/^DATABASE_ENGINE = 'postgresql'/DATABASE_ENGINE = 'mysql'/" settings.py
+sed -ie "s/^DATABASE_ENGINE = 'postgresql'/DATABASE_ENGINE = 'sqlite3'/" settings.py
+sed -ie "s|^DATABASE_NAME = '.*'|DATABASE_NAME = '%{buildroot}%{databasedir}/database'|" settings.py
 
 %build
 %python_compile
@@ -33,10 +34,18 @@ sed -ie "s/^DATABASE_ENGINE = 'postgresql'/DATABASE_ENGINE = 'mysql'/" settings.
 
 %install
 rm -Rf %{buildroot}
-mkdir -p %{buildroot}%{ezwebdir}
-cp -a * %{buildroot}%{ezwebdir}
 
 mkdir -p %buildroot%databasedir
+touch %{buildroot}%{databasedir}/database
+
+./manage.py syncdb <<EOF
+no
+
+EOF
+sed -ie "s|^DATABASE_NAME = '.*'|DATABASE_NAME = '%{databasedir}/database'|" settings.py
+
+mkdir -p %{buildroot}%{ezwebdir}
+cp -a * %{buildroot}%{ezwebdir}
 
 mkdir -p %buildroot%_webappconfdir
 cat > %buildroot%_webappconfdir/%name.conf << EOF
@@ -64,3 +73,4 @@ EOF
 %config(noreplace) %_webappconfdir/%name.conf
 %{ezwebdir}
 %attr(0770,root,apache) %databasedir
+%config(noreplace) %attr(0660,root,apache) %databasedir/database
