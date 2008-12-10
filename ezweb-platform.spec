@@ -16,7 +16,7 @@ Group:		System/Servers
 Summary:	EzWeb Platform
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 Requires:	python-django >= 1.0, apache, apache-mod_python, python-sqlite
-Requires:	python-psycopg
+Requires:	python-psycopg python-imaging
 BuildArch:	noarch
 %description
 The EzWeb project is based on the development of key technologies to be
