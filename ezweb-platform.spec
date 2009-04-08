@@ -4,11 +4,13 @@
 %define ezwebdir %_datadir/%name
 %define databasedir %{_localstatedir}/%{_lib}/%name
 
-%define svnrev 1580
+%define svnrev 1825
 
 Name:		ezweb-platform
 Version:	0.1
 Release:	%mkrel 0.1.svn%svnrev
+# downloaded from svn:
+# svn export https://svn.forge.morfeo-project.org/svn/ezwebplatform/ezweb_platform/src/trunk
 Source:		ezweb-platform-svn%{svnrev}.tar.bz2
 URL:		http://ezweb.morfeo-project.org/
 License:	GPLv2+
