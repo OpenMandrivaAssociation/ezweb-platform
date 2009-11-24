@@ -4,7 +4,7 @@
 %define ezwebdir %_datadir/%name
 %define databasedir %{_localstatedir}/%{_lib}/%name
 
-%define svnrev 1825
+%define svnrev 2697
 
 Name:		ezweb-platform
 Version:	0.1
@@ -18,9 +18,10 @@ Group:		System/Servers
 Summary:	EzWeb Platform
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires:	python-devel, python-sqlite, python-django >= 1.0, python-libxml2dom
-BuildRequires:	python-psycopg, python-imaging
+BuildRequires:	python-psycopg2, python-imaging
 Requires:	python-django >= 1.0, apache, apache-mod_python, python-sqlite
-Requires:	python-psycopg python-imaging python-libxml2dom
+Requires:	python-imaging python-libxml2dom
+Suggests:	python-psycopg2
 BuildArch:	noarch
 %description
 The EzWeb project is based on the development of key technologies to be
@@ -29,7 +30,7 @@ architecture
 
 %prep
 %setup -q -n ezweb-platform-svn%{svnrev}
-sed -ie "s/^DATABASE_ENGINE = 'postgresql'/DATABASE_ENGINE = 'sqlite3'/" settings.py
+sed -ie "s/^DATABASE_ENGINE = 'postgresql_psycopg2'/DATABASE_ENGINE = 'sqlite3'/" settings.py
 sed -ie "s|^DATABASE_NAME = '.*'|DATABASE_NAME = '%{buildroot}%{databasedir}/database'|" settings.py
 
 %build
