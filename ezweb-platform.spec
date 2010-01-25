@@ -4,7 +4,7 @@
 %define ezwebdir %_datadir/%name
 %define databasedir %{_localstatedir}/%{_lib}/%name
 
-%define svnrev 2697
+%define svnrev 2768
 
 Name:		ezweb-platform
 Version:	0.1
@@ -54,17 +54,28 @@ cp -a * %{buildroot}%{ezwebdir}
 
 mkdir -p %buildroot%_webappconfdir
 cat > %buildroot%_webappconfdir/%name.conf << EOF
-  <Location />
-    SetHandler python-program
-    PythonHandler django.core.handlers.modpython
-    SetEnv DJANGO_SETTINGS_MODULE settings
+<Location />
+  SetHandler python-program
+  PythonHandler django.core.handlers.modpython
+  SetEnv DJANGO_SETTINGS_MODULE settings
 
-    PythonPath "['/usr/share/ezweb-platform'] + sys.path"
-  </Location>
+  PythonPath "['/usr/share/ezweb-platform'] + sys.path"
+</Location>
 
-  Alias /media /usr/share/python-support/python-django/django/contrib/admin/media
-  Alias /site-media /usr/share/ezweb-platform/media
-  Alias /repository /var/www/gadgets
+Alias /media /usr/share/python-support/python-django/django/contrib/admin/media
+Alias /site-media /usr/share/ezweb-platform/media
+Alias /repository /var/www/gadgets
+
+<Location /repository>
+  SetHandler None
+</Location>
+
+<Directory "/var/www/gadgets">
+  Options Indexes FollowSymLinks MultiViews
+  AllowOverride None
+  Order allow,deny
+  Allow from all
+</Directory>
 EOF
 
 %post
