@@ -8,7 +8,7 @@
 
 Name:		ezweb-platform
 Version:	0.1
-Release:	%mkrel 0.1.svn%svnrev
+Release:	%mkrel 0.2.svn%svnrev
 # downloaded from svn:
 # svn export https://svn.forge.morfeo-project.org/svn/ezwebplatform/ezweb_platform/src/trunk
 Source:		ezweb-platform-svn%{svnrev}.tar.bz2
@@ -16,13 +16,18 @@ URL:		http://ezweb.morfeo-project.org/
 License:	GPLv2+
 Group:		System/Servers
 Summary:	EzWeb Platform
-BuildRoot:      %{_tmppath}/%{name}-buildroot
 BuildRequires:	python-devel, python-sqlite, python-django >= 1.0, python-libxml2dom
 BuildRequires:	python-psycopg2, python-imaging
 Requires:	python-django >= 1.0, apache, apache-mod_python, python-sqlite
 Requires:	python-imaging python-libxml2dom
 Suggests:	python-psycopg2
+%if %mdkversion < 201010
+Requires(post):   rpm-helper
+Requires(postun):   rpm-helper
+%endif
 BuildArch:	noarch
+BuildRoot:      %{_tmppath}/%{name}-%{version}
+
 %description
 The EzWeb project is based on the development of key technologies to be
 employed in building the front end layer of a new generation SOA
@@ -79,10 +84,14 @@ Alias /repository /var/www/gadgets
 EOF
 
 %post
+%if %mdkversion < 201010
 %_post_webapp
+%endif
 
 %postun
+%if %mdkversion < 201010
 %_postun_webapp
+%endif
 
 %files
 %defattr(-,root,root)
