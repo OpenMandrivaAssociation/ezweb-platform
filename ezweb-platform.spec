@@ -12,7 +12,7 @@ Release:	%mkrel 0.2.svn%svnrev
 # downloaded from svn:
 # svn export https://svn.forge.morfeo-project.org/svn/ezwebplatform/ezweb_platform/src/trunk
 Source:		ezweb-platform-svn%{svnrev}.tar.bz2
-URL:		http://ezweb.morfeo-project.org/
+URL:		https://ezweb.morfeo-project.org/
 License:	GPLv2+
 Group:		System/Servers
 Summary:	EzWeb Platform
