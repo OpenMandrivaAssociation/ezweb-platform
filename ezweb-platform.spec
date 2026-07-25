@@ -8,7 +8,7 @@
 
 Name:		ezweb-platform
 Version:	0.1
-Release:	%mkrel 0.2.svn%svnrev
+Release:	1
 # downloaded from svn:
 # svn export https://svn.forge.morfeo-project.org/svn/ezwebplatform/ezweb_platform/src/trunk
 Source:		ezweb-platform-svn%{svnrev}.tar.bz2
